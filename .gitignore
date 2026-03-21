@@ -1,0 +1,10 @@
+# Bỏ qua các file .csv của dstat chưa qua xử lý
+*.csv
+!results/processed/*.csv
+
+# Bỏ qua file raw quá lớn (nếu có)
+*.jtl
+
+# Bỏ qua thư mục hệ thống
+.DS_Store
+__pycache__/
