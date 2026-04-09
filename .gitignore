@@ -1,10 +1,20 @@
+# Bỏ qua các file hệ thống và cache Python
+.DS_Store
+__pycache__/
+*.pyc
+.venv/
+venv/
+
 # Bỏ qua các file .csv của dstat chưa qua xử lý
 *.csv
 !results/processed/*.csv
 
-# Bỏ qua file raw quá lớn (nếu có)
+# Bỏ qua file kết quả JMeter raw (hàng triệu dòng, rất nặng)
 *.jtl
 
-# Bỏ qua thư mục hệ thống
-.DS_Store
-__pycache__/
+# Bỏ qua các file log thô của cAdvisor và terminal
+results/raw/*.log
+
+# Bỏ qua các file nén backup được tạo trong quá trình test
+*.tar.gz
+*.zip
