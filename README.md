@@ -1,9 +1,11 @@
 # 🚀 Container-Native Benchmarking Lab
 
-![Python](https://img.shields.io/badge/Python-3.x-blue?style=flat&logo=python)
-![Docker](https://img.shields.io/badge/Docker-Engine-blue?style=flat&logo=docker)
-![Nginx](https://img.shields.io/badge/Nginx-Reverse%20Proxy-green?style=flat&logo=nginx)
-![Linux](https://img.shields.io/badge/Linux-Kernel_5.x-yellow?style=flat&logo=linux)
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3.x-blue?style=flat&logo=python" alt="Python">
+  <img src="https://img.shields.io/badge/Docker-Engine-blue?style=flat&logo=docker" alt="Docker">
+  <img src="https://img.shields.io/badge/Nginx-Reverse%20Proxy-green?style=flat&logo=nginx" alt="Nginx">
+  <img src="https://img.shields.io/badge/Linux-Kernel_5.x-yellow?style=flat&logo=linux" alt="Linux">
+</p>
 
 Đồ án: **Đánh giá Hiệu năng Mạng và Chi phí Ảo hóa trong Kiến trúc Container-Native: So sánh TCP Congestion Control, Docker Network Stack và Reverse Proxy dưới điều kiện mạng suy giảm và CPU Throttling.**
 
@@ -19,7 +21,7 @@ Dự án này xây dựng một phòng thí nghiệm đo lường hiệu năng (
 
 Dự án áp dụng chặt chẽ **Lý thuyết Hàng đợi (Queueing Theory)** và **Định luật Little (L = λ × W)** để giải mã các hiện tượng "bùng nổ độ trễ" (Latency Explosion) và thắt cổ chai (Bottleneck) trong các hệ thống phân tán.
 
-![alt text](image.png)
+<p align="center"><img src="image.png" alt="alt text"></p>
 
 ## 💻 Yêu cầu Hệ thống (Prerequisites)
 Để đảm bảo tính chính xác tuyệt đối trong việc đo lường độ trễ ở mức Microsecond (µs), lab yêu cầu cấu hình khắt khe:
@@ -42,23 +44,23 @@ Dự án được chia thành 4 giai đoạn với 12 kịch bản (Cases) test 
 ### Phase 1: Baseline Network Stack
 Đo lường chi phí ảo hóa mạng qua việc bắn 20,000 RPS tĩnh.
 * **Kết quả:** Overhead của Docker Bridge path tốn khoảng ~11µs so với Bare-metal, làm dịch chuyển phân phối độ trễ (Tail Latency Shift) nhưng không đáng kể ở tải thấp. Host mode gần như không có overhead mạng.
-![alt text](image-1.png)
+<p align="center"><img src="image-1.png" alt="alt text"></p>
 
 ### Phase 2: TCP Congestion Control (CUBIC vs. BBR)
 Ép băng thông TCP dưới điều kiện mạng lý tưởng và mạng suy giảm (Delay 50ms, Loss 2% qua NetEm).
 * **Kết quả:** Ở mạng LAN sạch, cả hai đạt ~941 Mbps. Khi có Loss 2%, CUBIC sụp đổ hoàn toàn (còn ~2.37 Mbps) do cơ chế Multiplicative Decrease. Google BBR tỏa sáng khi duy trì được băng thông vượt trội (~341 Mbps) nhờ mô hình BDP (Bandwidth-Delay Product).
 
-![alt text](<Chụp màn hình từ 2026-04-08 15-10-07.png>)
+<p align="center"><img src="Chụp màn hình từ 2026-04-08 15-10-07.png" alt="alt text"></p>
 
 ### Phase 3: CPU Throttling & Reverse Proxy
 Sử dụng cgroups v2 giới hạn Nginx ở mức 1.0 CPU và 0.5 CPU, sau đó phân tán tải qua HAProxy.
 * **Kết quả:** Khi Nginx (0.5 CPU) gánh 40,000 RPS, hệ thống bão hòa, P99 Latency vọt lên 182ms. HAProxy giải cứu thành công bằng cách chia đều tải cho 2 backend (2x 0.5 CPU), kéo P99 về lại mức ổn định (~76ms).
-![alt text](<Chụp màn hình từ 2026-04-09 10-04-22.png>)
+<p align="center"><img src="Chụp màn hình từ 2026-04-09 10-04-22.png" alt="alt text"></p>
 
 ### Phase 4: Full Stress / Combined Stress
 Kết hợp Mạng suy giảm (Delay 20ms) và Tải cao (500 Virtual Users) có và không có HAProxy.
 * **Kết quả:** Khám phá ra hiện tượng "Tự giới hạn tốc độ mạng" (Network-induced Self-throttling) dựa trên Định luật Little. Delay mạng khiến giới hạn RPS của Client bị khóa ở mức ~23.5K RPS, giữ hệ thống Server không bị sụp đổ. Qua đó, đo lường được chi phí (Overhead Tax) của HAProxy là làm tăng độ trễ thêm ~6ms (P99).
-![alt text](<Chụp màn hình từ 2026-04-09 12-31-53.png>)
+<p align="center"><img src="Chụp màn hình từ 2026-04-09 12-31-53.png" alt="alt text"></p>
 
 ---
 
