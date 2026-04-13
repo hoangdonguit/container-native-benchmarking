@@ -21,7 +21,7 @@ Dự án này xây dựng một phòng thí nghiệm đo lường hiệu năng (
 
 Dự án áp dụng chặt chẽ **Lý thuyết Hàng đợi (Queueing Theory)** và **Định luật Little ($L = \lambda \times W$)** để giải mã các hiện tượng "bùng nổ độ trễ" (Latency Explosion) và thắt cổ chai (Bottleneck) trong các hệ thống phân tán.
 
-<p align="center"><img src="/mnt/d/25. Đánh giá hiệu năng/1. Đồ án/Topology-01.png" alt="Sơ đồ Topology" width="800"></p>
+<p align="center"><img src="Topology-01.png" alt="Sơ đồ Topology" width="800"></p>
 
 ## 💻 Yêu cầu Hệ thống (Prerequisites)
 Để đảm bảo tính chính xác tuyệt đối trong việc đo lường độ trễ ở mức Microsecond (µs), lab yêu cầu cấu hình khắt khe:
